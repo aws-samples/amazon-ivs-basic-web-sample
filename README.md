@@ -15,7 +15,7 @@ Read more about how to [add live video to your apps and websites](https://aws.am
 Shows how to instantiate multiple Amazon IVS players simultaneously.
 
 **Minimal Player Setup**
-Shows the a minimal way to implement the Amazon IVS Web PlayerSDK.
+Shows a minimal way to implement the Amazon IVS PlayerSDK.
 
 **Video.js Integration**
 Shows how to use the Amazon IVS PlayerSDK with [Video.js](https://videojs.com/).
