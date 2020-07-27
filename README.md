@@ -17,8 +17,12 @@ Shows how to instantiate multiple Amazon IVS players simultaneously.
 **Minimal Player Setup**
 Shows the a minimal way to implement the Amazon IVS Web PlayerSDK.
 
+**Video.js Integration**
+Shows how to use the Amazon IVS PlayerSDK with [Video.js](https://videojs.com/).
+
 ## Getting Started
 * Open the `index.html` file of each folder in a modern web browser to test each demo.
+* Open any demo's `script.js` in your favorite code editor, and replace the value of `PlaybackUrl` with your own Amazon IVS Playback URL to play your own stream.
 
 ## Known issues and limitations
 * These code samples were written for demonstration purposes and not for production use.

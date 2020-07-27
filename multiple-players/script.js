@@ -18,16 +18,16 @@
 
 // Playback configuration
 // Replace these with your own Amazon IVS Playback URLs
-const playbackURL1 = "https://usher.ttvnw.net/api/lvs/hls/lvs.lvs-client-example.9083f9a2-a707-460a-a282-6191cbcfa9ec.m3u8";
-const playbackURL2 = "https://usher.ttvnw.net/api/lvs/hls/lvs.lvs-client-example.e974f90a-0858-4e0e-b535-53221b18b6bb.m3u8";
-const playbackURL3 = "https://usher.ttvnw.net/api/lvs/hls/lvs.lvs-client-example.183c01b7-0539-440f-9176-aa7bef66f7ea.m3u8";
-const playbackURL4 = "https://usher.ttvnw.net/api/lvs/hls/lvs.lvs-client-example.f66454f4-ce3a-4746-b255-a6c6ba29fc5f.m3u8";
+const playbackUrl1 = "https://usher.ttvnw.net/api/lvs/hls/lvs.lvs-client-example.9083f9a2-a707-460a-a282-6191cbcfa9ec.m3u8";
+const playbackUrl2 = "https://usher.ttvnw.net/api/lvs/hls/lvs.lvs-client-example.e974f90a-0858-4e0e-b535-53221b18b6bb.m3u8";
+const playbackUrl3 = "https://usher.ttvnw.net/api/lvs/hls/lvs.lvs-client-example.183c01b7-0539-440f-9176-aa7bef66f7ea.m3u8";
+const playbackUrl4 = "https://usher.ttvnw.net/api/lvs/hls/lvs.lvs-client-example.f66454f4-ce3a-4746-b255-a6c6ba29fc5f.m3u8";
 
 const playbackUrls = [
-  playbackURL1,
-  playbackURL2,
-  playbackURL3,
-  playbackURL4
+  playbackUrl1,
+  playbackUrl2,
+  playbackUrl3,
+  playbackUrl4
 ];
 
 // App
