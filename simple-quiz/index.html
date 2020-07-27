@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!-- # Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved. -->
+  <!-- # SPDX-License-Identifier: MIT-0 -->
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Amazon IVS Simple Quiz demo</title>
+    <link rel="stylesheet" href="style.css" />
+
+    <script src="https://player.live-video.net/1.0.0/amazon-ivs-player.min.js"></script>
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+
+    <div id="app">
+      <div class="inner">
+        <!-- Player wrapper, forcing 16:9 aspect ratio -->
+        <div class="player-wrapper">
+          <div class="aspect-spacer"></div>
+          <div class="pos-absolute full-width full-height top-0">
+            <video id="video-player" class="el-player" playsinline></video>
+          </div>
+        </div>
+
+        <!-- Quiz UI -->
+        <div class="quiz-wrap">
+          <div id="waiting">
+            <span class="waiting-text float"
+              >Waiting for the next question</span
+            >
+          </div>
+          <div id="quiz" class="card drop">
+            <div id="card-inner">
+              <h2 id="question"></h2>
+              <div id="answers"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+  </body>
+</html>

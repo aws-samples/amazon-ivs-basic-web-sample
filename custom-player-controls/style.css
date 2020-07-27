@@ -1,0 +1,223 @@
+/* Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved. */
+/* SPDX-License-Identifier: MIT-0 */
+
+/* Reset */
+*,*::before,*::after{box-sizing:border-box}ul[class],ol[class]{padding:0}body,h1,h2,h3,h4,p,ul[class],ol[class],figure,blockquote,dl,dd{margin:0}html{scroll-behavior:smooth}body{min-height:100vh;text-rendering:optimizeSpeed;line-height:1.5}ul[class],ol[class]{list-style:none}a:not([class]){text-decoration-skip-ink:auto}img{max-width:100%;display:block}article>*+*{margin-top:1em}input,button,textarea,select{font:inherit}@media (prefers-reduced-motion:reduce){*{animation-duration:0.01ms!important;animation-iteration-count:1!important;transition-duration:0.01ms!important;scroll-behavior:auto!important}}
+
+/* Variables */
+:root {
+  --radius: 12px;
+  --btn-size: 3rem;
+}
+
+/* Style */
+html,
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+body {
+  overflow: hidden;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Ubuntu, "Helvetica Neue", sans-serif;
+  user-select: none;
+  background: #334273;
+  display: grid;
+  place-items: center;
+}
+
+.player-wrapper {
+  width: 90%;
+  position: relative;
+  overflow: hidden;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  border-radius: var(--radius);
+  box-shadow: 0 6px 30px rgba(0, 0, 0, 0.3);
+  z-index: 1;
+}
+
+.aspect-spacer {
+  padding-bottom: 56.25%;
+}
+
+#overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+}
+
+#player-controls {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+  transition: background 0.1s ease-in-out;
+  border-bottom-left-radius: var(--radius);
+  border-bottom-right-radius: var(--radius);
+}
+
+.player-controls__inner {
+  height: var(--btn-size);
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  padding: 0 10px 10px 10px;
+}
+
+.player--hover #player-controls {
+  background: linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.7) 0%,
+    rgba(0, 0, 0, 0) 20%,
+    rgba(0, 0, 0, 0) 100%
+  );
+}
+
+.player--hover .btn {
+  display: flex;
+}
+
+.player--hover #settings-menu.open {
+  display: block;
+}
+
+.btn {
+  outline: none;
+  appearance: none;
+  cursor: pointer;
+  border: 2px solid transparent;
+  -webkit-appearance: none;
+  background: transparent;
+  position: absolute;
+  bottom: 10px;
+  padding: 0;
+  display: flex;
+  flex-shrink: 0;
+  flex-wrap: nowrap;
+  display: none;
+  border-radius: 2px;
+}
+
+.btn--icon {
+  width: var(--btn-size);
+  height: var(--btn-size);
+  justify-content: center;
+  align-items: center;
+}
+
+.btn:focus {
+  border: 2px solid #fff;
+}
+
+.icon {
+  fill: #fff;
+}
+
+#play {
+  left: 15px;
+}
+
+#mute {
+  left: calc(25px + var(--btn-size));
+}
+
+#settings {
+  right: 15px;
+}
+
+.icon--settings {
+  transition: transform 0.15s ease-in-out;
+}
+
+.btn--pause .icon--pause {
+  display: none;
+}
+
+.btn--play .icon--play {
+  display: none;
+}
+
+.btn--mute .icon--volume_off {
+  display: none;
+}
+
+.btn--unmute .icon--volume_up {
+  display: none;
+}
+
+.btn--settings-on .icon--settings {
+  transform: rotate(45deg);
+}
+
+#settings-menu {
+  width: 180px;
+  height: auto;
+  padding: 20px 0;
+  position: absolute;
+  right: 10px;
+  bottom: 55px;
+  background: #000;
+  z-index: 2;
+  display: none;
+  border-radius: 10px;
+  color: #fff;
+}
+
+.settings-menu-item {
+  width: 100%;
+  height: 40px;
+  line-height: 40px;
+  padding: 0 20px;
+  display: block;
+  cursor: pointer;
+}
+
+.settings-menu-item:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+#video-player {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  background: #000;
+  border-radius: var(--radius);
+}
+
+/* Utility - Position */
+.pos-absolute {
+  position: absolute !important;
+}
+.pos-fixed {
+  position: fixed !important;
+}
+.pos-relative {
+  position: relative !important;
+}
+.top-0 {
+  top: 0 !important;
+}
+.bottom-0 {
+  bottom: 0 !important;
+}
+
+/* Utility - Width/Height */
+.full-width {
+  width: 100%;
+}
+.full-height {
+  height: 100%;
+}
