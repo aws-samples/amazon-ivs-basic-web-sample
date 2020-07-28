@@ -159,7 +159,7 @@ h2 {
 }
 
 .float {
-  transform: translatey(0px);
+  transform: translateY(0px);
   animation: float 6s ease-in-out infinite;
 }
 
@@ -197,13 +197,13 @@ h2 {
 
 @keyframes float {
   0% {
-    transform: translatey(0px);
+    transform: translateY(0px);
   }
   50% {
-    transform: translatey(-20px);
+    transform: translateY(-20px);
   }
   100% {
-    transform: translatey(0px);
+    transform: translateY(0px);
   }
 }
 

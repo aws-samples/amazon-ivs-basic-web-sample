@@ -1,4 +1,4 @@
-## Amazon IVS Basic Player Demos
+# Amazon IVS Basic Player Demos
 
 This repository contains a collection of plain JavaScript code samples, covering several basic Amazon IVS use cases.
 **This project is intended for education purposes only and not for production usage.**
