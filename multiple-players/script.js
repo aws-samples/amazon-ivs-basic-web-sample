@@ -74,7 +74,7 @@ const players = document.getElementById('players');
     });
     elPlayer.addEventListener(PlayerEventType.TEXT_METADATA_CUE, function (cue) {
       const metadataText = cue.text;
-      const position = player.getPosition().toFixed(2);
+      const position = elPlayer.getPosition().toFixed(2);
       console.log(
         `Player Event - TEXT_METADATA_CUE: "${metadataText}". Observed ${position}s after playback started.`
       );
