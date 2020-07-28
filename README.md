@@ -4,20 +4,25 @@ This is a collection of basic, plain JavaScript code samples to illustrate commo
 **This project is intended for education purposes only and not for production usage.**
 
 ## Demos
-**Custom Player Controls**
+**:bulb:Custom Player Controls**
+
 Shows how to leverage Amazon IVS's playerSDK APIs to implement custom player controls (Play/Pause, Mute/Unmute, Quality selection).
 
-**Simple Quiz**
+**:bulb:Simple Quiz**
+
 Shows how to leverage Amazon IVS's TimedMetadata API to display a basic Quiz interface. 
 Read more about how to [add live video to your apps and websites](https://aws.amazon.com/blogs/aws/amazon-interactive-video-service-add-live-video-to-your-apps-and-websites/).
 
-**Multiple Players**
+**:bulb:Multiple Players**
+
 Shows how to instantiate multiple Amazon IVS players simultaneously.
 
-**Minimal Player Setup**
+**:bulb:Minimal Player Setup**
+
 Shows a minimal way to implement the Amazon IVS PlayerSDK.
 
-**Video.js Integration**
+**:bulb:Video.js Integration**
+
 Shows how to use the Amazon IVS PlayerSDK with [Video.js](https://videojs.com/).
 
 ## Getting Started
