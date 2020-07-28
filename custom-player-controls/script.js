@@ -52,11 +52,10 @@ const settingsMenu = document.getElementById("settings-menu");
   });
 
   player.addEventListener(PlayerEventType.TEXT_METADATA_CUE, function (cue) {
-    console.log("Timed metadata: ", cue.text);
     const metadataText = cue.text;
     const position = player.getPosition().toFixed(2);
     console.log(
-      `PlayerEvent - METADATA: "${metadataText}". Observed ${position}s after playback started.`
+      `Player Event - TEXT_METADATA_CUE: "${metadataText}". Observed ${position}s after playback started.`
     );
   });
 
