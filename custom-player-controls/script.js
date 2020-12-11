@@ -16,9 +16,8 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-// Playback configuration
-// Replace this with your own Amazon IVS Playback URL
-const playbackUrl = 'https://fcc3ddae59ed.us-west-2.playback.live-video.net/api/video/v1/us-west-2.893648527354.channel.DmumNckWFTqz.m3u8';
+// PlaybackURL
+const playbackUrl = "https://fcc3ddae59ed.us-west-2.playback.live-video.net/api/video/v1/us-west-2.893648527354.channel.DmumNckWFTqz.m3u8";
 
 // App
 const videoPlayer = document.getElementById("video-player");
@@ -28,6 +27,28 @@ const btnPlay = document.getElementById("play");
 const btnMute = document.getElementById("mute");
 const btnSettings = document.getElementById("settings");
 const settingsMenu = document.getElementById("settings-menu");
+
+// Btn icons
+let setBtnPaused = function(){
+  btnPlay.classList.remove("btn--play");
+  btnPlay.classList.add("btn--pause");
+};
+
+let setBtnPlay = function(){
+  btnPlay.classList.add("btn--play");
+  btnPlay.classList.remove("btn--pause");
+};
+
+let setBtnMute = function(){
+  btnMute.classList.remove("btn--mute");
+  btnMute.classList.add("btn--unmute");
+};
+
+let setBtnUnmute = function(){
+  btnMute.classList.add("btn--mute");
+  btnMute.classList.remove("btn--unmute");
+};
+
 
 (function (IVSPlayer) {
   const PlayerState = IVSPlayer.PlayerState;
@@ -58,6 +79,11 @@ const settingsMenu = document.getElementById("settings-menu");
       `Player Event - TEXT_METADATA_CUE: "${metadataText}". Observed ${position}s after playback started.`
     );
   });
+  
+  player.addEventListener(PlayerEventType.AUDIO_BLOCKED, function(){
+    setBtnMute();
+  });
+
 
   // Setup stream and play
   player.setAutoplay(true);
@@ -85,13 +111,11 @@ const settingsMenu = document.getElementById("settings-menu");
     function (e) {
       if (btnPlay.classList.contains("btn--play")) {
         // change to pause
-        btnPlay.classList.remove("btn--play");
-        btnPlay.classList.add("btn--pause");
+        setBtnPaused();
         player.pause();
       } else {
         // change to play
-        btnPlay.classList.remove("btn--pause");
-        btnPlay.classList.add("btn--play");
+        setBtnPlay();
         player.play();
       }
     },
@@ -103,12 +127,10 @@ const settingsMenu = document.getElementById("settings-menu");
     "click",
     function (e) {
       if (btnMute.classList.contains("btn--mute")) {
-        btnMute.classList.remove("btn--mute");
-        btnMute.classList.add("btn--unmute");
+        setBtnMute();
         player.setMuted(1);
       } else {
-        btnMute.classList.remove("btn--unmute");
-        btnMute.classList.add("btn--mute");
+        setBtnUnmute();
         player.setMuted(0);
       }
     },
@@ -125,6 +147,7 @@ const settingsMenu = document.getElementById("settings-menu");
 
     q.addEventListener("click", (event) => {
       player.setQuality(obj);
+      closeSettingsMenu();
       return false;
     });
   };
