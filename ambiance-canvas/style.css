@@ -1,0 +1,54 @@
+html,
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Ubuntu, "Helvetica Neue", sans-serif;
+  background: #000;
+  display: grid;
+  place-items: center;
+  color: #FFF;
+}
+
+video {
+  width: 90%;
+  max-width: 1080px;
+  position: relative;
+  box-shadow: 0 6px 30px rgba(0, 0, 0, 0.3);
+  background: black;
+}
+
+#ambiance {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: scale(1.2);
+  -webkit-filter: blur(50px);
+  filter: blur(50px);
+  opacity: 0.75;
+  z-index: -1;
+}
+
+/* Safari unsupported message */
+p {font-size: 18px;}
+a {color: #FFF; font-size: 14px;}
+#safari {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: hsla(0, 0%, 10%, 1);
+  display: none;
+  z-index: 10;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
