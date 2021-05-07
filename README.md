@@ -24,6 +24,10 @@ Shows a minimal way to implement the Amazon IVS PlayerSDK.
 
 Shows how to use the Amazon IVS PlayerSDK with [Video.js](https://videojs.com/).
 
+**:bulb: Ambiance Canvas**
+
+A demo showing how you can achieve an "ambilight" effect using Canvas and the Amazon IVS Player SDK.
+
 ## Getting Started
 * Open the `index.html` file of each folder in a modern web browser to test each demo.
 * Open any demo's `script.js` in your favorite code editor, and replace the value of `PlaybackUrl` with your own Amazon IVS Playback URL to play your own stream.
