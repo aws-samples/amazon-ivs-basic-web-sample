@@ -38,9 +38,7 @@ body {
 #players {
   width: 100%;
   display: grid;
-  grid-template: 1fr auto / auto auto auto;
-  grid-template-areas: 
-  "a a a" "b c d";
+  grid-template-columns: repeat(3, minmax(100px, 1fr));
   grid-gap: 5px;
 }
 
@@ -50,22 +48,26 @@ video {
   background: #000;
   transition: all .25s cubic-bezier(0.165, 0.840, 0.440, 1.000);
 }
-
-video:nth-child(1) {grid-column: 1 / 4;}
-video:nth-child(2) {grid-column: 1 / 2;}
-video:nth-child(3) {grid-column: 2 / 3;}
-video:nth-child(4) {grid-column: 3 / 4;}
-
 video:hover {
   transform: scale(.96);
   z-index: 10;
   box-shadow: 0 0 20px rgba(0,0,0,.4);
+  cursor: pointer;
 }
 
 video:active {
   transform: scale(.92);
   z-index: 10;
   box-shadow: 0 0 20px rgba(0,0,0,.4);
+}
+
+video.featured {
+  grid-row: 1;
+  grid-column: 1 / 4;
+}
+
+video.featured:hover {
+  cursor: default;
 }
 
 /* Utility - Position */

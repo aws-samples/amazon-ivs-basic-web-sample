@@ -18,10 +18,10 @@
 
 // Playback configuration
 // Replace these with your own Amazon IVS Playback URLs
-const playbackUrl1 = "https://usher.ttvnw.net/api/lvs/hls/lvs.lvs-client-example.9083f9a2-a707-460a-a282-6191cbcfa9ec.m3u8";
-const playbackUrl2 = "https://usher.ttvnw.net/api/lvs/hls/lvs.lvs-client-example.e974f90a-0858-4e0e-b535-53221b18b6bb.m3u8";
-const playbackUrl3 = "https://usher.ttvnw.net/api/lvs/hls/lvs.lvs-client-example.183c01b7-0539-440f-9176-aa7bef66f7ea.m3u8";
-const playbackUrl4 = "https://usher.ttvnw.net/api/lvs/hls/lvs.lvs-client-example.f66454f4-ce3a-4746-b255-a6c6ba29fc5f.m3u8";
+const playbackUrl1 = "https://4c62a87c1810.us-west-2.playback.live-video.net/api/video/v1/us-west-2.049054135175.channel.TgUC9BcpWMIK.m3u8";
+const playbackUrl2 = "https://4c62a87c1810.us-west-2.playback.live-video.net/api/video/v1/us-west-2.049054135175.channel.NUiimXpVUGyr.m3u8";
+const playbackUrl3 = "https://4c62a87c1810.us-west-2.playback.live-video.net/api/video/v1/us-west-2.049054135175.channel.vz7GFGP6M3xJ.m3u8";
+const playbackUrl4 = "https://4c62a87c1810.us-west-2.playback.live-video.net/api/video/v1/us-west-2.049054135175.channel.7hL7yiiFH0Q1.m3u8";
 
 const playbackUrls = [
   playbackUrl1,
@@ -78,6 +78,17 @@ const players = document.getElementById('players');
       console.log(
         `Player Event - TEXT_METADATA_CUE: "${metadataText}". Observed ${position}s after playback started.`
       );
+    });
+
+    // Make the video the Featured one
+    if(id === 0){
+      video.classList.add('featured');
+    }
+
+    // On click, set new Featured video
+    video.addEventListener('click', (e) => {
+      document.getElementsByClassName('featured')[0].classList.remove('featured');
+      video.classList.add('featured');
     });
     
     // Player config
