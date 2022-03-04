@@ -1,0 +1,14 @@
+node_modules
+package-lock.json
+stack.json
+*.zip
+.env
+
+# misc/OS files
+ehthumbs.db
+Thumbs.db
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
