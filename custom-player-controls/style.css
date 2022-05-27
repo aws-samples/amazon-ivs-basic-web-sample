@@ -106,7 +106,7 @@ body {
   flex-shrink: 0;
   flex-wrap: nowrap;
   display: none;
-  border-radius: 2px;
+  border-radius: var(--btn-size);
 }
 
 .btn--icon {
@@ -133,6 +133,10 @@ body {
 }
 
 #settings {
+  right: calc(25px + var(--btn-size));
+}
+
+#fullscreen {
   right: 15px;
 }
 
@@ -154,6 +158,18 @@ body {
 
 .btn--unmute .icon--volume_up {
   display: none;
+}
+
+.icon--fullscreen_exit {
+  display: none;
+}
+
+.fullscreen .icon--fullscreen {
+  display: none;
+}
+
+.fullscreen .icon--fullscreen_exit {
+  display: block;
 }
 
 .btn--settings-on .icon--settings {

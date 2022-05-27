@@ -20,6 +20,7 @@
 const playbackUrl = "https://fcc3ddae59ed.us-west-2.playback.live-video.net/api/video/v1/us-west-2.893648527354.channel.DmumNckWFTqz.m3u8";
 
 // App
+const playerEl = document.getElementById("player");
 const videoPlayer = document.getElementById("video-player");
 const playerOverlay = document.getElementById("overlay");
 const playerControls = document.getElementById("player-controls");
@@ -27,6 +28,7 @@ const btnPlay = document.getElementById("play");
 const btnMute = document.getElementById("mute");
 const btnSettings = document.getElementById("settings");
 const settingsMenu = document.getElementById("settings-menu");
+const btnFullscreen = document.getElementById("fullscreen");
 
 // Btn icons
 let setBtnPaused = function(){
@@ -95,12 +97,12 @@ let setBtnUnmute = function(){
   // Show/Hide player controls
   playerOverlay.addEventListener(
     "mouseover",
-    function (e) {
+    (e) => {
       playerOverlay.classList.add("player--hover");
     },
     false
   );
-  playerOverlay.addEventListener("mouseout", function (e) {
+  playerOverlay.addEventListener("mouseout", (e) => {
     playerOverlay.classList.remove("player--hover");
   });
 
@@ -108,7 +110,7 @@ let setBtnUnmute = function(){
   // Play/Pause
   btnPlay.addEventListener(
     "click",
-    function (e) {
+    (e) => {
       if (btnPlay.classList.contains("btn--play")) {
         // change to pause
         setBtnPaused();
@@ -125,7 +127,7 @@ let setBtnUnmute = function(){
   // Mute/Unmute
   btnMute.addEventListener(
     "click",
-    function (e) {
+    (e) => {
       if (btnMute.classList.contains("btn--mute")) {
         setBtnMute();
         player.setMuted(1);
@@ -136,6 +138,56 @@ let setBtnUnmute = function(){
     },
     false
   );
+
+  // Toggle fullscreen
+  btnFullscreen.addEventListener(
+    "click", 
+    (e) => {
+    toggleFullscreen();
+  });
+
+  let toggleFullscreen = () => {
+    if(!playerEl.classList.contains('fullscreen')) {
+      if (playerEl.requestFullscreen) {
+        playerEl.requestFullscreen();
+      } else if (playerEl.webkitRequestFullscreen) {
+        /* Safari */
+        playerEl.webkitRequestFullscreen();
+      } else if (playerEl.msRequestFullscreen) {
+        /* IE11 */
+        playerEl.msRequestFullscreen();
+      }
+      playerEl.classList.add('fullscreen');
+    } else {
+      if (document.exitFullscreen) {
+        document.exitFullscreen();
+      } else if (document.webkitExitFullscreen) {
+        /* Safari */
+        document.webkitExitFullscreen();
+      } else if (document.msExitFullscreen) {
+        /* IE11 */
+        document.msExitFullscreen();
+      }
+      playerEl.classList.remove('fullscreen');
+    }
+  }
+
+  // Handle exiting full screen
+  playerEl.addEventListener("fullscreenchange", exitHandler);
+  playerEl.addEventListener("webkitfullscreenchange", exitHandler);
+  playerEl.addEventListener("mozfullscreenchange", exitHandler);
+  playerEl.addEventListener("MSFullscreenChange", exitHandler);
+
+  function exitHandler() {
+    if (
+      !document.fullscreenElement &&
+      !document.webkitIsFullScreen &&
+      !document.mozFullScreen &&
+      !document.msFullscreenElement
+    ) {
+      playerEl.classList.remove("fullscreen");
+    }
+  }
 
   // Create Quality Options
   let createQualityOptions = function (obj, i) {
