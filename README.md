@@ -3,6 +3,9 @@
 This repository contains a collection of plain JavaScript code samples, covering several basic Amazon IVS use cases.
 **This project is intended for education purposes only and not for production usage.**
 
+![Amazon IVS Basic Player demos](amazon-ivs-basic-web-sample.png)
+
+
 ## Demos
 **:bulb: Custom Player Controls**
 
