@@ -18,15 +18,16 @@
 
 // Playback configuration
 // Replace this with your own Amazon IVS Playback URL
-const playbackUrl = "https://fcc3ddae59ed.us-west-2.playback.live-video.net/api/video/v1/us-west-2.893648527354.channel.xhP3ExfcX8ON.m3u8";
+const playbackUrl =
+  'https://4c62a87c1810.us-west-2.playback.live-video.net/api/video/v1/us-west-2.049054135175.channel.GHRwjPylmdXm.m3u8';
 
 // App
-const videoPlayer = document.getElementById("video-player");
-const quizEl = document.getElementById("quiz");
-const waitMessage = document.getElementById("waiting");
-const questionEl = document.getElementById("question");
-const answersEl = document.getElementById("answers");
-const cardInnerEl = document.getElementById("card-inner");
+const videoPlayer = document.getElementById('video-player');
+const quizEl = document.getElementById('quiz');
+const waitMessage = document.getElementById('waiting');
+const questionEl = document.getElementById('question');
+const answersEl = document.getElementById('answers');
+const cardInnerEl = document.getElementById('card-inner');
 
 (function (IVSPlayer) {
   const PlayerState = IVSPlayer.PlayerState;
@@ -38,16 +39,16 @@ const cardInnerEl = document.getElementById("card-inner");
 
   // Attach event listeners
   player.addEventListener(PlayerState.PLAYING, function () {
-    console.log("Player State - PLAYING");
+    console.log('Player State - PLAYING');
   });
   player.addEventListener(PlayerState.ENDED, function () {
-    console.log("Player State - ENDED");
+    console.log('Player State - ENDED');
   });
   player.addEventListener(PlayerState.READY, function () {
-    console.log("Player State - READY");
+    console.log('Player State - READY');
   });
   player.addEventListener(PlayerEventType.ERROR, function (err) {
-    console.warn("Player Event - ERROR:", err);
+    console.warn('Player Event - ERROR:', err);
   });
 
   player.addEventListener(PlayerEventType.TEXT_METADATA_CUE, function (cue) {
@@ -68,39 +69,39 @@ const cardInnerEl = document.getElementById("card-inner");
 
   // Remove card
   function removeCard() {
-    quizEl.classList.toggle("drop");
+    quizEl.classList.toggle('drop');
   }
 
   // Trigger quiz
   function triggerQuiz(metadataText) {
     let obj = JSON.parse(metadataText);
 
-    quizEl.style.display = "";
-    quizEl.classList.remove("drop");
-    waitMessage.style.display = "none";
-    cardInnerEl.style.display = "none";
-    cardInnerEl.style.pointerEvents = "auto";
+    quizEl.style.display = '';
+    quizEl.classList.remove('drop');
+    waitMessage.style.display = 'none';
+    cardInnerEl.style.display = 'none';
+    cardInnerEl.style.pointerEvents = 'auto';
 
     while (answersEl.firstChild) answersEl.removeChild(answersEl.firstChild);
     questionEl.textContent = obj.question;
 
     let createAnswers = function (obj, i) {
-      let q = document.createElement("a");
+      let q = document.createElement('a');
       let qText = document.createTextNode(obj.answers[i]);
       answersEl.appendChild(q);
-      q.classList.add("answer");
+      q.classList.add('answer');
       q.appendChild(qText);
 
-      q.addEventListener("click", (event) => {
-        cardInnerEl.style.pointerEvents = "none";
+      q.addEventListener('click', (event) => {
+        cardInnerEl.style.pointerEvents = 'none';
         if (q.textContent === obj.answers[obj.correctIndex]) {
-          q.classList.toggle("correct");
+          q.classList.toggle('correct');
         } else {
-          q.classList.toggle("wrong");
+          q.classList.toggle('wrong');
         }
         setTimeout(function () {
           removeCard();
-          waitMessage.style.display = "";
+          waitMessage.style.display = '';
         }, 1050);
         return false;
       });
@@ -109,8 +110,8 @@ const cardInnerEl = document.getElementById("card-inner");
     for (var i = 0; i < obj.answers.length; i++) {
       createAnswers(obj, i);
     }
-    cardInnerEl.style.display = "";
+    cardInnerEl.style.display = '';
   }
 
-  waitMessage.style.display = "";
+  waitMessage.style.display = '';
 })(window.IVSPlayer);
