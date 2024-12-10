@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" class="w-full h-full">
+  <!-- # Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved. -->
+  <!-- # SPDX-License-Identifier: MIT-0 -->
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Amazon IVS Basic Player Tester demo</title>
+
+    <!-- Warning: Do not use Tailwind Play CDN in production -->
+    <!-- See: https://tailwindcss.com/docs/installation -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,aspect-ratio,line-clamp,container-queries"></script>
+
+    <!-- Amazon IVS Player SDK -->
+    <script src="https://player.live-video.net/1.35.0/amazon-ivs-player.min.js"></script>
+
+    <!-- App logic -->
+    <script src="script.js" defer></script>
+  </head>
+  <body class="w-full h-full">
+    <div class="w-full h-full flex flex-col justify-center">
+      <div class="w-5/6 mx-auto flex flex-col gap-2">
+        <div class="flex gap-4">
+          <input class="w-full rounded-full py-3 px-4" type="text" name="playback_url" id="playback_url" value="https://fcc3ddae59ed.us-west-2.playback.live-video.net/api/video/v1/us-west-2.893648527354.channel.DmumNckWFTqz.m3u8" placeholder="Playback URL">
+          <button class="bg-gray-200 font-semibold text-lg rounded-full px-6" id="load_btn">Load</button>
+        </div>
+        <video class="w-full aspect-video" id="video-player" controls playsinline></video>
+      </div>
+    </div>
+  </body>
+</html>
