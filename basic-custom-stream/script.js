@@ -28,8 +28,7 @@ if (IVSPlayer.isPlayerSupported) {
 
   player = IVSPlayerPackage.create({
     serviceWorker: {
-      url: 'amazon-ivs-service-worker-loader.js',
-      transformTargetDuration: true
+      url: 'amazon-ivs-service-worker-loader.js'
     }
   });
 
