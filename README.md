@@ -34,7 +34,7 @@ A demo showing how you can achieve an "ambilight" effect using Canvas and the Am
 ## Getting Started
 * Open the `index.html` file of each folder in a modern web browser to test each demo.
 * Open any demo's `script.js` in your favorite code editor, and replace the value of `PlaybackUrl` with your own Amazon IVS Playback URL to play your own stream.
-* Some demos may require running a local server. Here are a few ways to start one:
+* Some browsers may require running a local server to properly load certain demos. Here are a few ways to start one:
 
 ### Using Python
 - Mac/Linux (Python 3):
