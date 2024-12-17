@@ -34,6 +34,30 @@ A demo showing how you can achieve an "ambilight" effect using Canvas and the Am
 ## Getting Started
 * Open the `index.html` file of each folder in a modern web browser to test each demo.
 * Open any demo's `script.js` in your favorite code editor, and replace the value of `PlaybackUrl` with your own Amazon IVS Playback URL to play your own stream.
+* Some demos may require running a local server. Here are a few ways to start one:
+
+### Using Python
+- Mac/Linux (Python 3):
+  ```bash
+  python3 -m http.server 8000
+  ```
+- Windows (Python 3):
+  ```bash
+  python -m http.server 8000
+  ```
+
+### Using Node.js
+First, install a package like `http-server` globally:
+```bash
+npm install -g http-server
+```
+Then run:
+```bash
+http-server
+```
+
+After starting the server, visit `http://localhost:8000` in your web browser to view the demos.
+Note: The port number (8000) can be changed to any available port on your system.
 
 ## Known issues and limitations
 * These code samples were written for demonstration purposes and not for production use.
