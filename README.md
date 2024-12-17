@@ -57,7 +57,7 @@ http-server
 ```
 
 After starting the server, visit `http://localhost:8000` in your web browser to view the demos.
-Note: The port number (8000) can be changed to any available port on your system.
+The port number (8000) can be changed to any available port on your system.
 
 **Note**: Service Workers (used in the "basic-custom-stream" demo) require the page to be served over either `localhost` or `HTTPS`. For more information, see the [IVS Low-Latency documentation](https://docs.aws.amazon.com/ivs/latest/LowLatencyUserGuide/web-getting-started.html#web-service-worker).
 
