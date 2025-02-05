@@ -56,6 +56,24 @@ Then run:
 http-server
 ```
 
+### basic-custom-stream
+The `basic-custom-stream` demo must be run with HTTPS. HTTPS requires a certificate to be generated. 
+
+In the sample directory generate a certificate with the following command:
+```
+openssl req -newkey rsa:2048 -new -nodes -x509 -days 3650 -keyout key.pem -out cert.pem
+```
+
+Fill out the relevant details in the promote. 
+
+In the sample directory run `http-server` with the generated certificate:
+```
+http-server ./  -S -C cert.pem --port 8000
+```
+
+In the browser navigate to the provided endpoint, ex `https://127.0.0.1`. The page will load a warning "This connection Is Not Private" because the certificate is self-signed. Proceed to the page and the player sample will load. 
+
+
 After starting the server, visit `http://localhost:8000` in your web browser to view the demos.
 The port number (8000) can be changed to any available port on your system.
 
