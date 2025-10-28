@@ -35,52 +35,52 @@ jobs:
             exit 0
           fi
 
-          # Extract current version from first file found
-          CURRENT_VERSION=$(grep -oP 'player\.live-video\.net/\K[0-9]+\.[0-9]+\.[0-9]+' $FILES_WITH_SDK | head -1)
-          echo "Current version in files: $CURRENT_VERSION"
-
-          # Compare versions
-          if [ "$CURRENT_VERSION" != "$LATEST_VERSION" ]; then
-            echo "Update available: $CURRENT_VERSION -> $LATEST_VERSION"
-            echo "has_update=true" >> $GITHUB_OUTPUT
-            echo "current_version=$CURRENT_VERSION" >> $GITHUB_OUTPUT
-            echo "new_version=$LATEST_VERSION" >> $GITHUB_OUTPUT
+          # Track if any updates are made
+          UPDATE_COUNT=0
+          
+          # Loop through each file and update any old version to latest
+          while IFS= read -r file; do
+            # Get all unique versions in this file
+            VERSIONS=$(grep -oP 'player\.live-video\.net/\K[0-9]+\.[0-9]+\.[0-9]+' "$file" | sort -u)
             
-            # Save list of files for PR body
-            echo "FILES_LIST<<EOF" >> $GITHUB_OUTPUT
-            echo "$FILES_WITH_SDK" | sed 's/^\.\//- `/' | sed 's/$/`/' >> $GITHUB_OUTPUT
-            echo "EOF" >> $GITHUB_OUTPUT
-            
-            # Count files
-            FILE_COUNT=$(echo "$FILES_WITH_SDK" | wc -l)
-            echo "file_count=$FILE_COUNT" >> $GITHUB_OUTPUT
-            
-            # List all files that will be updated
-            echo "Files to be updated ($FILE_COUNT):"
-            echo "$FILES_WITH_SDK"
-            
-            # Update all files with the new version
-            echo "$FILES_WITH_SDK" | while read -r file; do
-              echo "Updating: $file"
-              sed -i "s|player\.live-video\.net/$CURRENT_VERSION|player.live-video.net/$LATEST_VERSION|g" "$file"
+            # Update each old version to latest
+            for version in $VERSIONS; do
+              if [ "$version" != "$LATEST_VERSION" ]; then
+                echo "Updating $file: $version -> $LATEST_VERSION"
+                sed -i "s|player\.live-video\.net/$version|player.live-video.net/$LATEST_VERSION|g" "$file"
+                UPDATE_COUNT=$((UPDATE_COUNT + 1))
+              fi
             done
-            
-            # Verify updates
-            echo ""
-            echo "Verification of updated files:"
-            UPDATED_COUNT=$(grep -r "player\.live-video\.net/$LATEST_VERSION" . --include="*.html" --include="*.js" --exclude-dir=.git --exclude-dir=node_modules -l | wc -l)
-            OLD_COUNT=$(grep -r "player\.live-video\.net/$CURRENT_VERSION" . --include="*.html" --include="*.js" --exclude-dir=.git --exclude-dir=node_modules -l | wc -l || echo 0)
-            echo "Files with new version ($LATEST_VERSION): $UPDATED_COUNT"
-            echo "Files with old version ($CURRENT_VERSION): $OLD_COUNT"
-            
-            if [ "$OLD_COUNT" -ne 0 ]; then
-              echo "WARNING: Some files still contain the old version!"
-              exit 1
-            fi
-          else
-            echo "No update available - already on latest version: $CURRENT_VERSION"
+          done <<< "$FILES_WITH_SDK"
+          
+          # Check if any updates were made
+          if [ "$UPDATE_COUNT" -eq 0 ]; then
+            echo "No update needed - all files already on latest version: $LATEST_VERSION"
             echo "has_update=false" >> $GITHUB_OUTPUT
+            exit 0
           fi
+          
+          # Verify no old versions remain
+          REMAINING_OLD=$(grep -r "player\.live-video\.net/[0-9]\+\.[0-9]\+\.[0-9]\+" . --include="*.html" --include="*.js" --exclude-dir=.git --exclude-dir=node_modules -h | grep -v "player\.live-video\.net/$LATEST_VERSION" | wc -l)
+          
+          if [ "$REMAINING_OLD" -ne 0 ]; then
+            echo "ERROR: $REMAINING_OLD old version(s) still remain after update!"
+            exit 1
+          fi
+          
+          echo "has_update=true" >> $GITHUB_OUTPUT
+          echo "new_version=$LATEST_VERSION" >> $GITHUB_OUTPUT
+          
+          # Save list of files for PR body
+          echo "FILES_LIST<<EOF" >> $GITHUB_OUTPUT
+          echo "$FILES_WITH_SDK" | sed 's/^\.\//- `/' | sed 's/$/`/' >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+          
+          # Count files
+          FILE_COUNT=$(echo "$FILES_WITH_SDK" | wc -l)
+          echo "file_count=$FILE_COUNT" >> $GITHUB_OUTPUT
+          
+          echo "Successfully updated $FILE_COUNT file(s) to version $LATEST_VERSION"
 
       - name: Create Pull Request
         if: steps.check-updates.outputs.has_update == 'true'
