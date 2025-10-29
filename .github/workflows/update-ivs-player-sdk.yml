@@ -1,0 +1,128 @@
+name: Update Amazon IVS Player SDK
+
+on:
+  schedule:
+    - cron: '0 0 * * *' # Run daily at midnight UTC
+  workflow_dispatch: # Allow manual triggering
+
+jobs:
+  update-ivs-player:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Check for updates
+        id: check-updates
+        run: |
+          # Get latest version from npm
+          LATEST_VERSION=$(npm view amazon-ivs-player version)
+          echo "Latest version from npm: $LATEST_VERSION"
+
+          # Find all files with player.live-video.net references
+          FILES_WITH_SDK=$(grep -r "player\.live-video\.net/[0-9]\+\.[0-9]\+\.[0-9]\+" . --include="*.html" --include="*.js" --exclude-dir=.git --exclude-dir=node_modules -l)
+          
+          if [ -z "$FILES_WITH_SDK" ]; then
+            echo "No files found with SDK references"
+            echo "has_update=false" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+
+          # Track if any updates are made
+          UPDATE_COUNT=0
+          
+          # Loop through each file and update any old version to latest
+          while IFS= read -r file; do
+            # Get all unique versions in this file
+            VERSIONS=$(grep -oP 'player\.live-video\.net/\K[0-9]+\.[0-9]+\.[0-9]+' "$file" | sort -u)
+            
+            # Update each old version to latest
+            for version in $VERSIONS; do
+              if [ "$version" != "$LATEST_VERSION" ]; then
+                echo "Updating $file: $version -> $LATEST_VERSION"
+                sed -i "s|player\.live-video\.net/$version|player.live-video.net/$LATEST_VERSION|g" "$file"
+                UPDATE_COUNT=$((UPDATE_COUNT + 1))
+              fi
+            done
+          done <<< "$FILES_WITH_SDK"
+          
+          # Check if any updates were made
+          if [ "$UPDATE_COUNT" -eq 0 ]; then
+            echo "No update needed - all files already on latest version: $LATEST_VERSION"
+            echo "has_update=false" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+          
+          # Verify no old versions remain
+          REMAINING_OLD=$(grep -r "player\.live-video\.net/[0-9]\+\.[0-9]\+\.[0-9]\+" . --include="*.html" --include="*.js" --exclude-dir=.git --exclude-dir=node_modules -h | grep -v "player\.live-video\.net/$LATEST_VERSION" | wc -l)
+          
+          if [ "$REMAINING_OLD" -ne 0 ]; then
+            echo "ERROR: $REMAINING_OLD old version(s) still remain after update!"
+            exit 1
+          fi
+          
+          echo "has_update=true" >> $GITHUB_OUTPUT
+          echo "new_version=$LATEST_VERSION" >> $GITHUB_OUTPUT
+          
+          # Save list of files for PR body
+          echo "FILES_LIST<<EOF" >> $GITHUB_OUTPUT
+          echo "$FILES_WITH_SDK" | sed 's/^\.\//- `/' | sed 's/$/`/' >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+          
+          # Count files
+          FILE_COUNT=$(echo "$FILES_WITH_SDK" | wc -l)
+          echo "file_count=$FILE_COUNT" >> $GITHUB_OUTPUT
+          
+          echo "Successfully updated $FILE_COUNT file(s) to version $LATEST_VERSION"
+
+      - name: Create Pull Request
+        if: steps.check-updates.outputs.has_update == 'true'
+        uses: peter-evans/create-pull-request@v6
+        with:
+          commit-message: 'chore: update Amazon IVS Player SDK to ${{ steps.check-updates.outputs.new_version }}'
+          title: 'chore: update Amazon IVS Player SDK to ${{ steps.check-updates.outputs.new_version }}'
+          body: |
+            This PR updates the Amazon IVS Player SDK from ${{ steps.check-updates.outputs.current_version }} to ${{ steps.check-updates.outputs.new_version }}.
+
+            ## Changes
+
+            This workflow automatically scans the repository for all files containing references to `player.live-video.net` CDN and updates them to the latest version.
+
+            **${{ steps.check-updates.outputs.file_count }} file(s) were updated:**
+
+            ${{ steps.check-updates.outputs.FILES_LIST }}
+
+            ## How It Works
+
+            The workflow:
+            1. Checks npm for the latest version of `amazon-ivs-player`
+            2. Searches the repository for all `.html` and `.js` files containing `player.live-video.net` references
+            3. Updates all version numbers in these files to match the latest version
+            4. Verifies all files were updated successfully before creating this PR
+
+            ## Testing Recommendations
+
+            Please verify that all demos work correctly with the new SDK version:
+            - Test video playback in each demo
+            - Verify custom controls and UI functionality
+            - Check any VideoJS integrations
+            - Test service worker functionality if applicable
+            - Verify all interactive features (quiz, canvas, etc.)
+
+            ---
+
+            **Release Notes:** https://www.npmjs.com/package/amazon-ivs-player?activeTab=versions
+            
+            This update was automatically generated by the dependency update workflow.
+          branch: dependency-update/amazon-ivs-player-sdk
+          delete-branch: true
+          labels: |
+            dependencies
+            automated-pr
